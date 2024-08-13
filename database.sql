@@ -8,7 +8,7 @@ CREATE TABLE `books` (
   `cover_url` varchar(256) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `books_unique` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 -- `ironhack-project`.categories definition
@@ -18,7 +18,7 @@ CREATE TABLE `categories` (
   `name` varchar(64) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `categories_unique` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 -- `ironhack-project`.authors definition
@@ -28,7 +28,7 @@ CREATE TABLE `authors` (
   `name` varchar(128) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `authors_unique` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 -- `ironhack-project`.book_categories definition
@@ -52,4 +52,18 @@ CREATE TABLE `book_authors` (
   KEY `book_authors_authors_FK` (`author_id`),
   CONSTRAINT `book_authors_authors_FK` FOREIGN KEY (`author_id`) REFERENCES `authors` (`id`),
   CONSTRAINT `book_authors_books_FK` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- `ironhack-project`.chapters definition
+
+CREATE TABLE `chapters` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(256) NOT NULL,
+  `book_id` int NOT NULL,
+  `number` int NOT NULL,
+  `code` varchar(64) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `chapters_unique` (`book_id`,`number`),
+  CONSTRAINT `chapters_books_FK` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
