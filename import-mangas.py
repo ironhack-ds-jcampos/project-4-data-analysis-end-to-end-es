@@ -46,7 +46,6 @@ def fetchBookInfo(code):
 
 books = ["Naruto",
     "One Piece",
-    "Dragon Ball",
     "Attack on Titan",
     "Death Note",
     "Fullmetal Alchemist",
@@ -57,22 +56,12 @@ books = ["Naruto",
     "Demon Slayer",
     "Tokyo Ghoul",
     "Sailor Moon",
-    "JoJo's Bizarre Adventure",
     "Berserk",
     "Fairy Tail",
     "Neon Genesis Evangelion",
     "Yu Yu Hakusho",
     "Akira",
     "Sword Art Online"]
-
-books = ["Naruto",
-    "One Piece",
-    "Dragon Ball",
-    "Attack on Titan",
-    "Death Note",
-    "Fullmetal Alchemist",
-    "Bleach",
-    "My Hero Academia"]
 
 booksList = []
 
