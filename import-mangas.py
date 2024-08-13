@@ -44,7 +44,35 @@ def fetchBookInfo(code):
 
     return json.loads(response.text)
 
-books = ["Death note", "Made in abyss"]
+books = ["Naruto",
+    "One Piece",
+    "Dragon Ball",
+    "Attack on Titan",
+    "Death Note",
+    "Fullmetal Alchemist",
+    "Bleach",
+    "My Hero Academia",
+    "One Punch Man",
+    "Hunter x Hunter",
+    "Demon Slayer",
+    "Tokyo Ghoul",
+    "Sailor Moon",
+    "JoJo's Bizarre Adventure",
+    "Berserk",
+    "Fairy Tail",
+    "Neon Genesis Evangelion",
+    "Yu Yu Hakusho",
+    "Akira",
+    "Sword Art Online"]
+
+books = ["Naruto",
+    "One Piece",
+    "Dragon Ball",
+    "Attack on Titan",
+    "Death Note",
+    "Fullmetal Alchemist",
+    "Bleach",
+    "My Hero Academia"]
 
 booksList = []
 
@@ -58,6 +86,13 @@ book_categories = {}
 
 # Insert in DB
 cursor = conn.cursor()
+
+truncate = ['book_authors', 'book_categories', 'chapters', 'books', 'authors', 'categories']
+for table in truncate:
+    cursor.execute("DELETE FROM " + table + ";")
+
+print("DATA DELETED")
+
 for book in booksList:
     insert_query = """
     INSERT INTO books (name, code, cover_url, synopsis)
@@ -66,19 +101,28 @@ for book in booksList:
 
     # INSERT book
     cursor.execute(insert_query, (book['name'], book['code'], book['coverUrl'], book['synopsis']))
-    generated_id = cursor.lastrowid
+    book_id = cursor.lastrowid
 
     for author in book['authors']:
         if not author in book_authors.keys():
             book_authors[author] = set()
         
-        book_authors[author].add(generated_id)
+        book_authors[author].add(book_id)
 
     for category in book['categories']:
         if not author in book_categories.keys():
             book_categories[category] = set()
         
-        book_categories[category].add(generated_id)
+        book_categories[category].add(book_id)
+
+    for chapter in book['chapters']:
+        insert_query = """
+        INSERT INTO chapters (name, code, number, book_id)
+        VALUES (%s, %s, %s, %s);
+        """
+
+        # INSERT chapter
+        cursor.execute(insert_query, (chapter['name'], chapter['code'], chapter['number'], book_id))
 
 
 for author in book_authors.keys():
@@ -115,5 +159,5 @@ for category in book_categories.keys():
 
         cursor.execute(insert_query, [category_id, generated_id])
 
-#conn.commit()
+conn.commit()
 conn.close()
