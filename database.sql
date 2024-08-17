@@ -31,6 +31,16 @@ CREATE TABLE `categories` (
 ) ENGINE=InnoDB AUTO_INCREMENT=202 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
+-- `ironhack-project`.regions definition
+
+CREATE TABLE `regions` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `regions_unique` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
 -- `ironhack-project`.book_authors definition
 
 CREATE TABLE `book_authors` (
@@ -52,6 +62,18 @@ CREATE TABLE `book_categories` (
   KEY `book_categories_books_FK` (`book_id`),
   CONSTRAINT `book_categories_books_FK` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`),
   CONSTRAINT `book_categories_categories_FK` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- `ironhack-project`.book_regions definition
+
+CREATE TABLE `book_regions` (
+  `book_id` int NOT NULL,
+  `region_id` int NOT NULL,
+  PRIMARY KEY (`book_id`,`region_id`),
+  KEY `book_regions_regions_FK` (`region_id`),
+  CONSTRAINT `book_regions_books_FK` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`),
+  CONSTRAINT `book_regions_regions_FK` FOREIGN KEY (`region_id`) REFERENCES `regions` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
