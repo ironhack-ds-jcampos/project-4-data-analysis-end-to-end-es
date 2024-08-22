@@ -1,0 +1,17 @@
+version: '3'
+name: mangas-api_dev
+services:
+  server:
+    container_name: mangas-api_dev
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    env_file:
+      - .env
+    ports:
+      - '${PORT}:${PORT}'
+    volumes:
+      - ./src:/app/src
+      - ./certificates:/app/certificates
+    expose:
+      - '${PORT}'
